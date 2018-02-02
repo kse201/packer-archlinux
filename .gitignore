@@ -1,2 +1,3 @@
 *.iso
-t *.box
+packer_cache
+*.box

@@ -1,7 +1,7 @@
 {
     "variables" : {
-        "iso_url" : "archlinux-2019.02.01-x86_64.iso",
-        "iso_sum" : "9e5023ac403a46ce06f6560867b88fe5",
+        "base_name": "",
+        "iso_sum" : "",
         "iso_sum_type" : "md5",
         "http_proxy": "{{ env `http_proxy`}}",
         "https_proxy": "{{ env `https_proxy`}}",
@@ -15,7 +15,7 @@
     "builders" : [ {
         "type" : "virtualbox-iso",
         "guest_os_type" : "ArchLinux_64",
-        "iso_url" : "{{user `iso_url`}}",
+        "iso_url" : "{{user `base_name`}}.iso",
         "iso_checksum" : "{{user `iso_sum`}}",
         "iso_checksum_type" : "{{user `iso_sum_type`}}",
         "guest_additions_mode" : "disable",
@@ -28,6 +28,7 @@
         "headless" : true,
         "keep_registered": "{{user `debug`}}",
         "boot_command" : [
+            "<enter><wait10><wait10><wait5>",
             "<enter><wait10><wait10><wait5>",
             "systemctl start sshd<enter><wait5>",
             "passwd<enter>",
@@ -60,6 +61,6 @@
     } ],
     "post-processors" : [ {
         "type" : "vagrant",
-        "output" : "archlinux-x86_64.box"
+        "output" : "{{ user `base_name`}}.box"
     } ]
 }

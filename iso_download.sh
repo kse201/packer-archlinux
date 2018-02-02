@@ -1,5 +1,9 @@
 #!/bin/sh
-DATETIME=2019.02.01
-FILENAME=archlinux-${DATETIME}-x86_64.iso
-wget -O $FILENAME \
-  "http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/iso/${DATETIME}/$FILENAME"
+
+url="http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/iso/latest"
+md5sums=$(curl "${url}/md5sums.txt")
+md5sum=$(echo $md5sums | awk '/iso/ {print $1}')
+iso=$(echo $md5sums | awk '/iso/ {print $2}')
+
+wget -O $iso \
+  "http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/iso/latest/$iso"

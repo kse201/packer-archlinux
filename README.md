@@ -18,10 +18,10 @@ packer-archlinux is component for build archlinux vagrant box file.
   $ ./iso_download.sh
   ```
 
-  Then, run `packer build`
+  Then, run `packer_build.sh`
 
   ```shell
-  $ packer build archlinux-x86_64.json
+  $ ./packer_build.sh
   ```
 
 ## Configuration
