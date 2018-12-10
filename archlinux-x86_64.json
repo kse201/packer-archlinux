@@ -1,7 +1,7 @@
 {
     "variables" : {
-        "iso_url" : "archlinux-2017.03.01-dual.iso",
-        "iso_sum" : "1d25235e7cebe45f93452fbc05a0fb66",
+        "iso_url" : "archlinux-2018.12.01-x86_64.iso",
+        "iso_sum" : "c116f065b76c8d755b87b146d1cb1dcc",
         "iso_sum_type" : "md5",
         "http_proxy": "{{ env `http_proxy`}}",
         "https_proxy": "{{ env `https_proxy`}}",
