@@ -18,14 +18,11 @@ pacstrap /mnt base base-devel net-tools openssh dhcpcd
 
 make_jp_mirrorlist "/mnt${MIRRORLIST_PATH}"
 
-cat <<'...' >>/mnt/etc/pacman.conf
-
-[archlinuxfr]
-SigLevel = Never
-Server = http://repo.archlinux.fr/$arch
-...
-
-$chroot pacman -S --noconfirm --refresh yaourt
+$chroot cd /tmp
+$chroot wget https://github.com/Jguer/yay/releases/download/v8.998/yay_8.998_x86_64.tar.gz
+$chroot tar xzvf yay_8.998_x86_64.tar.gz
+$chroot cd yay_8.998_x86_64
+$chroot ./yay -Sy yay-bin
 
 # make boot-loader
 if [ -e '/sys/firmware/efi/efivars' ] ; then
