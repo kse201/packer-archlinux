@@ -1,8 +1,44 @@
-#!/bin/sh
+#!/bin/sh -ev
 
 sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm git python ansible
 
-pushd /vagrant/provision
-ansible-galaxy install -r ./requirements.yml -p ./vendor/roles
-ansible-playbook ./site.yml
+target='localhost'
+inventory='inventory.ini'
+config='ansible.cfg'
+requirements="requirements.yml"
+playbook='site.yml'
+work_dir=$(mktemp -d)
+trap 'rm -rf ${work_dir}' INT TERM
+cd "$work_dir"
+
+cat << ... > ${work_dir}/${requirements}
+---
+- src: kse201.base
+...
+
+cat << ... > ${work_dir}/${inventory}
+[defaults]
+${target} ansible_connection=local
+...
+
+
+cat << ... > ${work_dir}/${config}
+[defaults]
+inventory=${inventory}
+roles_path=${work_dir}/roles
+retry_files_enabled=False
+cow_selection = random
+...
+
+cat << ... > "${playbook}"
+---
+- hosts: ${target}
+  roles:
+    - role: kse201.base
+  become: false
+...
+
+ansible-galaxy install -r ${work_dir}/${requirements} -p ${work_dir}/roles
+ansible-playbook \
+    ${work_dir}/"${playbook}" "$@"
