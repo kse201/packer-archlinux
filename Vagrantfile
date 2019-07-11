@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = 2
 userdata = File.read('provision/userdata')
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  box = 'archlinux-2019.02.01-x86_64'
+  box = 'archlinux-2019.07.01'
   config.vm.box = box
   config.vm.provider 'virtualbox' do |vb|
     vb.cpus = 2

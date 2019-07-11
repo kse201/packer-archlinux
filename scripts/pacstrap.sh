@@ -18,11 +18,12 @@ pacstrap /mnt base base-devel net-tools openssh dhcpcd
 
 make_jp_mirrorlist "/mnt${MIRRORLIST_PATH}"
 
-$chroot cd /tmp
-$chroot wget https://github.com/Jguer/yay/releases/download/v8.998/yay_8.998_x86_64.tar.gz
-$chroot tar xzvf yay_8.998_x86_64.tar.gz
-$chroot cd yay_8.998_x86_64
-$chroot ./yay -Sy yay-bin
+yay_repo="https://github.com/Jguer/yay"
+yay_latest=$(curl -i ${yay_repo}/releases/latest | grep Location | cut -d'v' -f 2 | tr -d '\n\r')
+wget ${yay_repo}/releases/download/v${yay_latest}/yay_${yay_latest}_x86_64.tar.gz 
+tar xzvf yay_${yay_latest}_x86_64.tar.gz
+mv yay_${yay_latest}_x86_64 /mnt/var/tmp
+$chroot /var/tmp/yay_${yay_latest}_x86_64/yay -Sy yay-bin
 
 # make boot-loader
 if [ -e '/sys/firmware/efi/efivars' ] ; then

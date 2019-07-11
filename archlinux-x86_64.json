@@ -31,17 +31,14 @@
             "<enter><wait10><wait10><wait5>",
             "<enter><wait10><wait10><wait5>",
             "systemctl start sshd<enter><wait5>",
-            "passwd<enter>",
+            "passwd<enter><wait>",
             "root<enter>",
             "root<enter>"
             ],
-            "ssh_username" : "root",
-            "ssh_password" : "root",
-            "ssh_wait_timeout" : "120s",
-            "vboxmanage": [
-                ["modifyvm", "{{.Name}}", "--memory", "1500"]
-            ],
-            "shutdown_command" : "systemctl poweroff"
+        "ssh_username" : "root",
+        "ssh_password" : "root",
+        "ssh_wait_timeout" : "120s",
+        "shutdown_command" : "systemctl poweroff"
     } ],
     "provisioners" : [ {
         "type" : "shell",

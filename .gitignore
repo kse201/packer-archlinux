@@ -3,3 +3,4 @@ packer_cache
 *.box
 vendor
 .vagrant
+output-virtualbox-iso
