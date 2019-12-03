@@ -14,7 +14,7 @@ Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch
 
 make_jp_mirrorlist "${MIRRORLIST_PATH}"
 
-pacstrap /mnt base base-devel net-tools openssh dhcpcd
+pacstrap /mnt base linux linux-firmware vim base-devel net-tools openssh dhcpcd
 
 make_jp_mirrorlist "/mnt${MIRRORLIST_PATH}"
 
