@@ -15,6 +15,8 @@ cd "$work_dir"
 cat << ... > ${work_dir}/${requirements}
 ---
 - src: kse201.base
+- src: kse201.ruby
+- src: kse201.python
 ...
 
 cat << ... > ${work_dir}/${inventory}
@@ -36,6 +38,8 @@ cat << ... > "${playbook}"
 - hosts: ${target}
   roles:
     - role: kse201.base
+    - role: kse201.ruby
+    - role: kse201.python
   become: false
 ...
 
