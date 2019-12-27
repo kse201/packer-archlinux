@@ -1,0 +1,40 @@
+#!/bin/sh -ev
+
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm git python ansible
+
+target='localhost'
+config='ansible.cfg'
+requirements="requirements.yml"
+playbook='site.yml'
+work_dir=$(mktemp -d)
+trap 'rm -rf ${work_dir}' INT TERM
+cd "$work_dir"
+
+cat << ... > ${work_dir}/${requirements}
+---
+- src: kse201.base
+- src: kse201.ruby
+- src: kse201.python
+...
+
+cat << ... > ${work_dir}/${config}
+[defaults]
+roles_path=${work_dir}/roles
+retry_files_enabled=False
+cow_selection = random
+...
+
+cat << ... > "${playbook}"
+---
+- hosts: localhost
+  connection: local
+  roles:
+    - role: kse201.ruby
+    - role: kse201.python
+  become: false
+...
+
+ansible-galaxy install -r ${work_dir}/${requirements} -p ${work_dir}/roles
+ansible-playbook \
+    ${work_dir}/"${playbook}" "$@"
